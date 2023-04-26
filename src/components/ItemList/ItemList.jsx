@@ -1,8 +1,22 @@
-const ItemList = ({ saludo }) => {
-  console.log("se actualiza el hijo");
+import ItemCard from "./ItemCard";
+
+
+const ItemList = ({ items }) => {
   return (
-    <div>
-      <h2>{saludo}</h2>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-evenly",
+        flexWrap: "wrap",
+        minHeight: "90vh",
+        padding: "40px"
+      }}
+    >
+      {items.map((item) => {
+        return (
+          <ItemCard item={item} key={item.id}/>
+        );
+      })}
     </div>
   );
 };
