@@ -84,10 +84,16 @@ export const Navbar = () => {
           >
             Remeras
           </button>
+          <button
+            variant="contained"
+            onClick={() => navigate("/category/zapatillas")}
+          >
+            Zapatillas
+          </button>
         </ul>
-
         <CartWidget />
       </div>
+
       <Outlet />
     </div>
   );
