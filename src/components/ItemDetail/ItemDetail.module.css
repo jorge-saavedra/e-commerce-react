@@ -1,0 +1,31 @@
+.containerIDetail {
+  background-color: rgb(58, 57, 57);
+  height: 100%;
+}
+.containerItemDetail {
+  width: 80%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.containerImage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.containerImage > img {
+  width: 50%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.containerDetail {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 300px;
+  color: rgba(187, 210, 233, 0.88);
+}

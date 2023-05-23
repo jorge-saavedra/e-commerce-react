@@ -1,36 +1,56 @@
 import { useState, useEffect } from "react";
 import ItemList from "./ItemList";
-import { products } from "../../productsMock";
-
+import { db } from "../../firebaseConfig";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import { PacmanLoader } from "react-spinners";
+export const ItemListContainer = () => {
+  const [items, setItems] = useState([]);
+  const { name } = useParams();
 
-const ItemListContainer = () => {
+  useEffect(() => {
+    let consulta;
+    const itemCollection = collection(db, "products");
 
-  const [ items , setItems ] = useState([])
+    if (name) {
+      const itemsCollectionFiltered = query(
+        itemCollection,
+        where("category", "==", name)
+      );
+      consulta = itemsCollectionFiltered;
+    } else {
+      consulta = itemCollection;
+    }
 
-  const { categoryName } = useParams()
-  
+    getDocs(consulta)
+      .then((res) => {
+        const products = res.docs.map((product) => {
+          return {
+            ...product.data(),
+            id: product.id,
+          };
+        });
 
-  useEffect( ()=>{
-
-    const productsFiltered = products.filter( prod => prod.category === categoryName)
-
-    const tarea = new Promise((resolve, reject) => {
-      resolve( categoryName ? productsFiltered : products );
-    });
-  
-    tarea
-      .then((res) => setItems(res))
-      .catch((error) => console.log(error));
-      
-  },[categoryName])
-
+        setItems(products);
+      })
+      .catch((err) => err);
+  }, [name]);
 
   return (
     <div>
-      <ItemList items={items} />
+      {items.length === 0 ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "30vh",
+          }}
+        >
+          <PacmanLoader color="blue" speedMultiplier={1.5} />
+        </div>
+      ) : (
+        <ItemList items={items} />
+      )}
     </div>
   );
 };
-
-export default ItemListContainer;

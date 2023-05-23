@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import {
   Button,
   Card,
@@ -8,32 +8,38 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-
-import { Link } from "react-router-dom";
-
 const ItemCard = ({ item }) => {
   return (
-    <Card sx={{ width: 345, height: 350 }}>
-      <CardMedia sx={{ height: 140 }} image={item.img} title="green iguana" />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {item.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.description}
-        </Typography>
-        <Typography variant="body2" color="primary">
-          {item.price}
-        </Typography>
-      </CardContent>
-      <CardActions style={{ height: 100 }}>
-        <Link to={`/itemDetail/${item.id}`}>
-          <Button variant="contained" size="small">
-            Ver detalle
-          </Button>
-        </Link>
-      </CardActions>
-    </Card>
+    <div>
+      <Card sx={{ width: 355, height: 400 }}>
+        <CardMedia sx={{ height: 150 }} image={item.img} title="green iguana" />
+        <CardContent style={{ textAlign: "center", fontFamily: "inter" }}>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.title}
+          </Typography>
+          <Typography variant="subtitle2" color="text.secondary">
+            {item.description}
+          </Typography>
+          <Typography variant="h6" color="blue">
+            Precio:
+            {item.price}
+          </Typography>
+        </CardContent>
+        <CardActions
+          style={{
+            display: "flex",
+            height: 50,
+            justifyContent: "space-around",
+          }}
+        >
+          <Link to={`/itemDetail/${item.id}`}>
+            <Button variant="contained" size="small">
+              Ver detalle
+            </Button>
+          </Link>
+        </CardActions>
+      </Card>
+    </div>
   );
 };
 

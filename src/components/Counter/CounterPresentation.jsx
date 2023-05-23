@@ -1,24 +1,47 @@
-const CounterPresentation = ({
-  user,
-  reiniciar,
-  sumar,
-  restar,
-  counter,
-  sumar10,
-  login,
-}) => {
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+const CounterPresentation = ({ counter, sumar, restar, onAdd }) => {
   return (
     <div>
-      <h1>Este es el contador</h1>
-      <button onClick={sumar}>Sumar</button>
-      <h3>{counter}</h3>
-      <button onClick={restar}>Restar</button>
-      <button onClick={sumar10}>Sumar 10</button>
-      <button onClick={reiniciar}>Reiniciar contador</button>
-
-      <button onClick={login}>Login</button>
-
-      {user.length > 0 ? <h2>Bienvenido {user}</h2> : <h2>Ingresa</h2>}
+      <div
+        style={{
+          marginBottom: "20px",
+          display: "flex",
+          gap: "30px",
+          padding: "10px",
+        }}
+      >
+        <Button
+          variant="contained"
+          color="warning"
+          style={{ marginLeft: "100px" }}
+          onClick={sumar}
+        >
+          Agregar
+        </Button>
+        <h2>{counter}</h2>
+        <Button variant="contained" color="warning" onClick={restar}>
+          Restar
+        </Button>
+      </div>
+      <div style={{ display: "flex", gap: "30px", paddingBottom: "25px" }}>
+        <Link to="/">
+          <Button
+            variant="contained"
+            color="error"
+            style={{ marginLeft: "50px" }}
+          >
+            Regresar
+          </Button>
+        </Link>
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={() => onAdd(counter)}
+        >
+          Agregar al carrito
+        </Button>
+      </div>
     </div>
   );
 };

@@ -1,62 +1,28 @@
-// import { Button } from "@mui/material";
-// import CartWidget from "../CartWidget/CartWidget";
-// import styles from "./Navbar.module.css";
-// import { Outlet, Link, useNavigate, NavLink } from "react-router-dom";
-
-// export const Navbar = () => {
-//   const navigate = useNavigate();
-
-//   return (
-//     <div>
-//       <div className={styles.containerNavbar}>
-//         <Link to="/">Aca el logo</Link>
-//         <ul style={{ display: "flex", gap: "30px" }}>
-//           <NavLink
-//             to="/"
-//             className={({ isActive }) =>
-//               isActive ? styles.active : styles.noActive
-//             }
-//           >
-//             Todas
-//           </NavLink>
-//           <NavLink
-//             to="/category/urbanas"
-//             className={({ isActive }) =>
-//               isActive ? styles.active : styles.noActive
-//             }
-//           >
-//             Urbanas
-//           </NavLink>
-//           <NavLink
-//             className={({ isActive }) =>
-//               isActive ? styles.active : styles.noActive
-//             }
-//             to="/category/deportivas"
-//           >
-//             Urbanas
-//           </NavLink>
-
-//           {/* <Button
-//             variant="contained"
-//             onClick={() => navigate("/category/deportivas")}
-//           >
-//             Deportivas
-//           </Button> */}
-//         </ul>
-//         <CartWidget />
-//       </div>
-
-//       <Outlet />
-//     </div>
-//   );
-// };
-import { flexbox } from "@mui/system";
 import CartWidget from "../CartWidget/CartWidget";
 import styles from "./Navbar.module.css";
 import { Outlet, Link, useNavigate } from "react-router-dom";
+import { db } from "../../firebaseConfig";
+import { getDocs, collection } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
-  const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  console.log(categories);
+
+  useEffect(() => {
+    const categoriesCollection = collection(db, "categories");
+    getDocs(categoriesCollection)
+      .then((res) => {
+        let categoriesResult = res.docs.map((category) => {
+          return {
+            ...category.data(),
+            id: category.id,
+          };
+        });
+        setCategories(categoriesResult);
+      })
+      .catch((err) => err);
+  }, []);
 
   return (
     <div>
@@ -65,35 +31,20 @@ export const Navbar = () => {
           <img
             style={{ display: "flex", width: "80px" }}
             src="https://res.cloudinary.com/dwtd9n613/image/upload/v1682380066/jtnesgwcckdonmkyurbc.png"
-            alt="Este es el logo del restaurante"
+            alt="Este es el logo de la tienda"
           />
         </Link>
-        <ul style={{ display: "flex", gap: "100px" }}>
-          <button variant="contained" onClick={() => navigate("/")}>
-            Menu
-          </button>
-          <button
-            variant="contained"
-            onClick={() => navigate("/category/pantalones")}
-          >
-            Pantalones
-          </button>
-          <button
-            variant="contained"
-            onClick={() => navigate("/category/remeras")}
-          >
-            Remeras
-          </button>
-          <button
-            variant="contained"
-            onClick={() => navigate("/category/zapatillas")}
-          >
-            Zapatillas
-          </button>
-        </ul>
+        <div className={styles.categories}>
+          {categories.map((category) => {
+            return (
+              <Link key={category.id} to={category.path}>
+                {category.title}
+              </Link>
+            );
+          })}
+        </div>
         <CartWidget />
       </div>
-
       <Outlet />
     </div>
   );

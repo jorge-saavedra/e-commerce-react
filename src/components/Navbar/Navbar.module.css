@@ -7,6 +7,23 @@
   padding-left: 8px;
   padding-right: 8px;
 }
+
+.categories {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+}
+.categories a {
+  background-color: beige;
+  padding: 10px 20px;
+  color: black;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+}
+
 ul li {
   text-decoration: none;
   font-weight: 500;
