@@ -1,5 +1,5 @@
 import { BsFillCartCheckFill } from "react-icons/bs";
-import "./CartWidget.module.css";
+import "./CartWidget.css";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ const CartWidget = () => {
         <BsFillCartCheckFill
           style={{
             fontSize: "2rem",
-            color: "primary",
+            color: "beige",
           }}
         />
         <div className="bubble-counter">

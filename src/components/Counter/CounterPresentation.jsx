@@ -13,32 +13,23 @@ const CounterPresentation = ({ counter, sumar, restar, onAdd }) => {
       >
         <Button
           variant="contained"
-          color="warning"
           style={{ marginLeft: "100px" }}
           onClick={sumar}
         >
           Agregar
         </Button>
         <h2>{counter}</h2>
-        <Button variant="contained" color="warning" onClick={restar}>
+        <Button variant="contained" onClick={restar}>
           Restar
         </Button>
       </div>
       <div style={{ display: "flex", gap: "30px", paddingBottom: "25px" }}>
         <Link to="/">
-          <Button
-            variant="contained"
-            color="error"
-            style={{ marginLeft: "50px" }}
-          >
+          <Button variant="contained" style={{ marginLeft: "50px" }}>
             Regresar
           </Button>
         </Link>
-        <Button
-          variant="contained"
-          color="warning"
-          onClick={() => onAdd(counter)}
-        >
+        <Button variant="contained" onClick={() => onAdd(counter)}>
           Agregar al carrito
         </Button>
       </div>
